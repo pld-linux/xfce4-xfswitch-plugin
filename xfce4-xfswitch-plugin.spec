@@ -1,5 +1,3 @@
-# TODO
-# - memleak: https://bugzilla.xfce.org/show_bug.cgi?id=7363
 Summary:	User switching applet for XFCE4 panel
 Summary(pl.UTF-8):	Przełączanie między użytkownikami
 Name:		xfce4-xfswitch-plugin
