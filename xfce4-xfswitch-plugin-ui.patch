@@ -1,0 +1,62 @@
+diff -ur xfswitch-plugin-0.0.1/configure.in xfswitch-plugin-0.0.1-ui/configure.in
+--- xfswitch-plugin-0.0.1/configure.in	2009-02-08 10:49:35.000000000 +0100
++++ xfswitch-plugin-0.0.1-ui/configure.in	2011-04-26 14:53:33.378632117 +0200
+@@ -62,7 +62,7 @@
+ dnl ***********************************
+ XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.12.0])
+ XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.4])
+-XDT_CHECK_PACKAGE([LIBXFCEGUI4], [libxfcegui4-1.0], [4.4])
++XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-1], [4.4])
+ XDT_CHECK_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-1.0], [4.4])
+ 
+ dnl ******************************
+diff -ur xfswitch-plugin-0.0.1/panel-plugin/main.c xfswitch-plugin-0.0.1-ui/panel-plugin/main.c
+--- xfswitch-plugin-0.0.1/panel-plugin/main.c	2009-02-03 20:40:06.000000000 +0100
++++ xfswitch-plugin-0.0.1-ui/panel-plugin/main.c	2011-04-26 14:55:57.574632084 +0200
+@@ -24,7 +24,7 @@
+ #include <gtk/gtk.h>
+ #include <gdk/gdkx.h>
+ 
+-#include <libxfcegui4/libxfcegui4.h>
++#include <libxfce4ui/libxfce4ui.h>
+ #include <libxfce4panel/xfce-panel-plugin.h>
+ #include <libxfce4panel/xfce-panel-convenience.h>
+ 
+@@ -83,7 +83,7 @@
+   int width = size - 2 - 2 * MAX (pd->button->style->xthickness,
+                                   pd->button->style->ythickness);
+ 
+-  pb = xfce_themed_icon_load ("system-users", width);
++  pb = gtk_icon_theme_load_icon ( gtk_icon_theme_get_default(), "system-users", width, GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
+   gtk_image_set_from_pixbuf (GTK_IMAGE (pd->image), pb);
+ 
+   g_object_unref (pb);
+@@ -118,7 +118,7 @@
+       if (!g_spawn_command_line_async ("gdmflexiserver --new",
+                                        &error))
+         {
+-          xfce_err (error->message);
++          xfce_dialog_show_error (NULL, NULL, error->message);
+           g_error_free (error);
+         }
+     }
+diff -ur xfswitch-plugin-0.0.1/panel-plugin/Makefile.am xfswitch-plugin-0.0.1-ui/panel-plugin/Makefile.am
+--- xfswitch-plugin-0.0.1/panel-plugin/Makefile.am	2009-02-08 10:37:18.000000000 +0100
++++ xfswitch-plugin-0.0.1-ui/panel-plugin/Makefile.am	2011-04-26 14:53:12.145632122 +0200
+@@ -8,14 +8,14 @@
+ xfswitch_plugin_CFLAGS =								\
+ 	@LIBXFCE4PANEL_CFLAGS@								\
+ 	@GTK_CFLAGS@									\
+-	@LIBXFCEGUI4_CFLAGS@								\
++	@LIBXFCE4UI_CFLAGS@								\
+ 	@LIBXFCE4UTIL_CFLAGS@								\
+ 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
+ 
+ xfswitch_plugin_LDADD = 								\
+ 	@LIBXFCE4PANEL_LIBS@								\
+ 	@GTK_LIBS@									\
+-	@LIBXFCEGUI4_LIBS@								\
++	@LIBXFCE4UI_LIBS@								\
+ 	@LIBXFCE4UTIL_LIBS@
+ 
+ #
