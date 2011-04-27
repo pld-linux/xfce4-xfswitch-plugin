@@ -2,7 +2,7 @@ Summary:	User switching applet for XFCE4 panel
 Summary(pl.UTF-8):	Przełączanie między użytkownikami
 Name:		xfce4-xfswitch-plugin
 Version:	0.0.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications
 Source0:	http://archive.xfce.org/src/panel-plugins/xfswitch-plugin/0.0/xfswitch-plugin-%{version}.tar.gz
@@ -53,6 +53,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%{__mv} $RPM_BUILD_ROOT%{_datadir}/locale/pt{_PT,}
 
 %find_lang xfswitch-plugin
 
